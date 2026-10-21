@@ -134,10 +134,10 @@ void refreshDisplay(byte status = 0)
         // show Status Msg
         // 1 - 20 : errores
         // 21 - resto : mensajes generales (??)
-        // digitalWrite(latchPin, LOW);
-        // display_text("AB 01"); // sample
-        // digitalWrite(latchPin, HIGH);
-        // delay(2000);
+        digitalWrite(latchPin, LOW);
+        display_text("AB 01"); // sample
+        digitalWrite(latchPin, HIGH);
+        delay(2000);
 
     }
 }
@@ -171,6 +171,9 @@ void display_setup() {
     displayEllapsedTime = millis();
 
     refreshDisplay();
+    // digitalWrite(latchPin, LOW); 
+    // display_text("12345");
+    // digitalWrite(latchPin, HIGH); 
 }
 
 
@@ -179,5 +182,7 @@ void display_loop() {
     if(millis() > displayEllapsedTime + BLINK_TIME) {
         enableDisplay = !enableDisplay;
         displayEllapsedTime = millis();
+    // Serial.println("la puta que te pario");
     }
+
 }

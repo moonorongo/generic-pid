@@ -21,8 +21,6 @@ void setup() {
     hid_setup();
     actions_setup();
 
-    // tone(12, 880, 1000);
-
 }
 
 void loop() {

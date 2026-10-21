@@ -6,14 +6,15 @@
 */
 
 #define checkInterval 1000 
-#define temp_dataPin 7
-#define temp_clockPin 6
-#define temp_selectPin 5
+#define temp_SO 7
+#define temp_CS 6
+#define temp_SCK 5
 
 unsigned long temperature_ellapsedTime;
 int status;
 
-MAX6675 thermoCouple(temp_selectPin, temp_dataPin, temp_clockPin);
+MAX6675 thermoCouple(temp_CS, temp_SO, temp_SCK); // ok ?
+// MAX6675 thermoCouple(temp_SCK, temp_CS, temp_SO);
 
 
 void temperature_showTemperature() {
@@ -29,26 +30,29 @@ void temperature_showTemperature() {
   else if (status == 4) { 
     // toArrayDigits(temperature); // mostrar Err 1
     refreshDisplay(1);
+    Serial.println("error 1");
   }
 
   else if (status == 129) {
     // toArrayDigits(temperature); // mostrar Err 2
     refreshDisplay(2);
+    Serial.println("error 2");
   }
 }
 
 void temperature_checkTemperature() {
   status = thermoCouple.read();
-  temperature = thermoCouple.getCelsius();
 
-  thermoCouple.setOffset(-4.0); // correcion de temperatura para la cupla q estoy usando
+
+  temperature = thermoCouple.getCelsius();
 }
 
 void temperature_setup() {
   SPI.begin();
   thermoCouple.begin();
-  thermoCouple.setSPIspeed(4000000);
+  // thermoCouple.setSPIspeed(1000000);
   temperature_ellapsedTime = millis();
+  thermoCouple.setOffset(-4.0); // correcion de temperatura para la cupla q estoy usando
 }
 
 
