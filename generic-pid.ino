@@ -16,7 +16,7 @@ byte mode = 0;
 void setup() {
     Serial.begin(9600); 
     display_setup();
-    temperature_setup();
+    temperature2_setup();
     pid_setup();
     hid_setup();
     actions_setup();
@@ -24,7 +24,7 @@ void setup() {
 }
 
 void loop() {
-    temperature_loop();
+    temperature2_loop();
     display_loop();
 
     pid_loop();

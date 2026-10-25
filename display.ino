@@ -2,7 +2,7 @@
 #define latchPin 3
 #define clockPin 4  
 
-#define BLINK_TIME 200
+#define BLINK_TIME 100
 
 unsigned long displayEllapsedTime;
 bool enableDisplay = true;
@@ -101,9 +101,9 @@ void display_text(char text[]) {
 }
 
 
-void refreshDisplay(byte status = 0)
+void refreshDisplay(byte st = 0)
 {
-    if(status == 0) {
+    if(st == 0) {
         digitalWrite(latchPin, LOW); 
 
         if(mode == MODE_SET_POINT) {
@@ -137,7 +137,7 @@ void refreshDisplay(byte status = 0)
         digitalWrite(latchPin, LOW);
         display_text("AB 01"); // sample
         digitalWrite(latchPin, HIGH);
-        delay(2000);
+        // delay(2000);
 
     }
 }
@@ -177,12 +177,35 @@ void display_setup() {
 }
 
 
-void display_loop() {
+void display_loop2() {
     // invert enableDisplay cada BLINK_TIME ms
     if(millis() > displayEllapsedTime + BLINK_TIME) {
         enableDisplay = !enableDisplay;
         displayEllapsedTime = millis();
-    // Serial.println("la puta que te pario");
+
+        Serial.print("Toggled ");
+
+        if(enableDisplay) {
+            Serial.println("ON");
+        } else {
+            Serial.println("off");
+        }
     }
 
+}
+
+void display_loop() {
+    unsigned long currentMillis = millis();
+
+    if (currentMillis - displayEllapsedTime >= BLINK_TIME) {
+
+        // Serial.print("Transcurrido: ");
+        // Serial.print(currentMillis - displayEllapsedTime);
+        // Serial.print(" ms | ");
+
+        enableDisplay = !enableDisplay;
+        displayEllapsedTime = currentMillis;
+
+        // Serial.println(enableDisplay ? "ON" : "OFF");
+    }
 }
