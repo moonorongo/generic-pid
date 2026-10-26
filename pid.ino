@@ -22,17 +22,13 @@ unsigned long windowStartTime;
 
 void pid_setup()
 {
+  Setpoint = 28;
+  windowStartTime = millis();
+
   pinMode(RELAY_PIN, OUTPUT);
   digitalWrite(RELAY_PIN, LOW);
 
-  windowStartTime = millis();
-
-  //initialize the variables we're linked to
-  Setpoint = 28;
-
   myPID.SetOutputLimits(0, windowSize);
-
-  //turn the PID on
   myPID.SetMode(AUTOMATIC);
 }
 
@@ -46,7 +42,6 @@ void pid_loop()
   unsigned long quantizedOutput = ((unsigned long)Output + 500) / 1000;
   quantizedOutput = quantizedOutput * 1000; 
 
-  // Asegurar por seguridad que no se salga de los límites [0, 4000]
   if (quantizedOutput > windowSize) {
     quantizedOutput = windowSize;
   }
@@ -58,14 +53,9 @@ void pid_loop()
   }
 
   if (quantizedOutput  < (now - windowStartTime)) {
-    digitalWrite(RELAY_PIN, HIGH);  // Apagar 1500W
+    digitalWrite(RELAY_PIN, HIGH);  // Apaga
   } else {
-    digitalWrite(RELAY_PIN, LOW); // Encender 1500W
+    digitalWrite(RELAY_PIN, LOW); // Enciende
   }
-
-  // Serial.print("Target: "); Serial.print(Setpoint);
-  // Serial.print(" | Actual: "); Serial.print(Input);
-  // Serial.print(" | Q Pulso ON (ms): "); Serial.print(Output);
-  // Serial.print(" | Pulso ON (ms): "); Serial.println(quantizedOutput);
 }
 

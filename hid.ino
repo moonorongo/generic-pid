@@ -1,6 +1,11 @@
+/*
+  Este codigo maneja la botonera y dispara una funcion 
+  actions_setup_pressed: cuando se pulsa por mas de PRESSING_TIME, esto pasa a modo Configuracion
+  actions_released: cuando se suelta el boton, esto dispara una accion, que se procesa en actions.ino
+*/
+
 #define DEBOUNCE_TIME 50
 #define PRESSING_TIME 2000
-
         
 byte buttons[] = { 10, 9, 11 };  // pins utilizados en el arduino
 

@@ -6,7 +6,7 @@ unsigned long actionsEllapsedTime;
 void actions_released(byte lastKeyPressed) {
   switch (mode) {
     case MODE_SHOW_TEMPERATURE:
-      if(lastKeyPressed != K_ENTER) {
+      if(lastKeyPressed != K_ENTER) { // si se pulsa UP o DOWN
         mode = MODE_SET_POINT;
         actionsEllapsedTime = millis();
         new_SetPoint = Setpoint; // actualiza new sp para poder editarlo
@@ -15,7 +15,10 @@ void actions_released(byte lastKeyPressed) {
       break;
 
     case MODE_SET_POINT:  
-        if(lastKeyPressed != K_ENTER) {
+        actions_setpoint_handler(lastKeyPressed, actionsEllapsedTime);
+
+/*
+        if(lastKeyPressed != K_ENTER) { // Se incrementa o decrementa valor TEMPORARIO de Setpoint
           mode = MODE_SET_POINT;
           actionsEllapsedTime = millis();
           
@@ -29,7 +32,7 @@ void actions_released(byte lastKeyPressed) {
 
         }
 
-        if(lastKeyPressed == K_ENTER) {
+        if(lastKeyPressed == K_ENTER) { // se confirma valor de Setpoint
           mode = MODE_SHOW_TEMPERATURE;
           actionsEllapsedTime = millis();
           Setpoint = new_SetPoint; // actualiza SetPoint
@@ -37,15 +40,14 @@ void actions_released(byte lastKeyPressed) {
           // de manera correcta (que no use siempre la misma parte de la memoria)
           // pero para eso tengo que tener toda la estructura (SP, KP, Kd, Ki)
         }
-
+*/
         break;
 
   }  
 }
 
 void actions_setup_pressed(byte lastKeyPressed) {
-  Serial.print("PRESSING 2 SECONDS ACTION:");
-  Serial.println(lastKeyPressed);
+  mode = MODE_SETTINGS_LVL_1; 
 }
 
 void actions_setup() {

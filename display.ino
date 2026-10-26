@@ -89,7 +89,7 @@ byte display_get_code(byte codigo) {
 // ES OBLIGATORIO QUE LA ENTRADA text TENGA EXACTAMENTE 5 CARACTERES, 
 // QUE PUEDEN SER UNICAMENTE EL ESPACIO Y A-Z EN MAYUSCULAS
     // aca habria que sanitizar text
-    // pero sanitizar es para pelotudos, 
+    // pero sanitizar es para pel*****s, 
     // si hay menos chars de 5 rompera
     // y si hay mas... los ignora
 void display_text(char text[]) {
@@ -110,7 +110,7 @@ void refreshDisplay(byte st = 0)
             // en MODE_SET_POINT debe parpadear el display,
             // asi como en los modos en los que estamos editando algun valor (en Kp, Ki, o Kd)
 
-            // POR FAVOR OPTIMIZAR TODA ESTA PORONGA HORRIBLE
+            // POR FAVOR OPTIMIZAR TODA ESTA POR***A HORRIBLE
             if(enableDisplay) {
                 shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[4]));
                 shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[3]));
@@ -171,41 +171,15 @@ void display_setup() {
     displayEllapsedTime = millis();
 
     refreshDisplay();
-    // digitalWrite(latchPin, LOW); 
-    // display_text("12345");
-    // digitalWrite(latchPin, HIGH); 
 }
 
-
-void display_loop2() {
-    // invert enableDisplay cada BLINK_TIME ms
-    if(millis() > displayEllapsedTime + BLINK_TIME) {
-        enableDisplay = !enableDisplay;
-        displayEllapsedTime = millis();
-
-        Serial.print("Toggled ");
-
-        if(enableDisplay) {
-            Serial.println("ON");
-        } else {
-            Serial.println("off");
-        }
-    }
-
-}
 
 void display_loop() {
     unsigned long currentMillis = millis();
 
+    // enableDisplay: se utiliza para hacer parpadear un elemento que estoy editando (SET POINT o alguna configuracion)
     if (currentMillis - displayEllapsedTime >= BLINK_TIME) {
-
-        // Serial.print("Transcurrido: ");
-        // Serial.print(currentMillis - displayEllapsedTime);
-        // Serial.print(" ms | ");
-
         enableDisplay = !enableDisplay;
         displayEllapsedTime = currentMillis;
-
-        // Serial.println(enableDisplay ? "ON" : "OFF");
     }
 }
