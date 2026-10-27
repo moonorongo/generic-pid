@@ -14,6 +14,10 @@
             si se complica le pongo un boton que resetee el PID, y a la mierda
 */
 
+
+// usado en display
+#define latchPin 3
+
 // constantes utilizadas por HID
 #define K_UP 0
 #define K_DOWN 1
@@ -42,6 +46,7 @@ void setup() {
     pid_setup();
     hid_setup();
     actions_setup();
+    actions_config_setup();
 }
 
 void loop() {

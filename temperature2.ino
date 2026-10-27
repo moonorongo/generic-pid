@@ -3,9 +3,10 @@
     OneWire 2.3.8
     DallasTemperature 4.0.6
 */
-
 #include <OneWire.h>
 #include <DallasTemperature.h>
+
+#include"display.h"
 
 #define checkInterval 1000
 #define ONE_WIRE_BUS 5

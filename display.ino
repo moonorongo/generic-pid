@@ -1,3 +1,5 @@
+#include"display.h"
+
 #define dataPin  2  
 #define latchPin 3
 #define clockPin 4  
@@ -6,6 +8,9 @@
 
 unsigned long displayEllapsedTime;
 bool enableDisplay = true;
+
+
+
 
 byte digits[] = {0, 0, 0, 0, 0};
 //              m  c  d  u. decimas
@@ -101,36 +106,44 @@ void display_text(char text[]) {
 }
 
 
-void refreshDisplay(byte st = 0)
+void refreshDisplay(byte st)
 {
     if(st == 0) {
         digitalWrite(latchPin, LOW); 
 
-        if(mode == MODE_SET_POINT) {
-            // en MODE_SET_POINT debe parpadear el display,
-            // asi como en los modos en los que estamos editando algun valor (en Kp, Ki, o Kd)
+        switch(mode) {
+            case MODE_SET_POINT:
+                // en MODE_SET_POINT debe parpadear el display,
+                // asi como en los modos en los que estamos editando algun valor (en Kp, Ki, o Kd)
 
-            // POR FAVOR OPTIMIZAR TODA ESTA POR***A HORRIBLE
-            if(enableDisplay) {
+                // POR FAVOR OPTIMIZAR TODA ESTA POR***A HORRIBLE
+                if(enableDisplay) {
+                    shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[4]));
+                    shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[3]));
+                    shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[2]));
+                    shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[1]));
+                    shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[0]));
+                } else {
+                    display_text("     ");
+                }
+                
+                break;
+
+            case MODE_SHOW_TEMPERATURE:
                 shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[4]));
                 shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[3]));
                 shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[2]));
                 shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[1]));
                 shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[0]));
-            } else {
-                display_text("     ");
-            }
-        } else { // muestro normal
-            shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[4]));
-            shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[3]));
-            shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[2]));
-            shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[1]));
-            shiftOut(dataPin, clockPin, MSBFIRST, display_get_code(digits[0]));
+                break;
+
+            case MODE_SETTINGS_LVL_1:
+                display_text(configLvl1[indexLvl1]);
         }
 
         digitalWrite(latchPin, HIGH);
-    } else {
 
+    } else { // reservado para mensajes de error 
         // show Status Msg
         // 1 - 20 : errores
         // 21 - resto : mensajes generales (??)
@@ -169,7 +182,6 @@ void display_setup() {
     pinMode(clockPin, OUTPUT);
 
     displayEllapsedTime = millis();
-
     refreshDisplay();
 }
 
