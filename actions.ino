@@ -19,16 +19,21 @@ void actions_released(byte lastKeyPressed) {
         break;
 
     case MODE_SETTINGS_LVL_1:
-        actions_config_handler(lastKeyPressed, actionsEllapsedTime);
+        actions_config_main_handler(lastKeyPressed);
+        break;
+
+    case MODE_SETTINGS_LVL_2_CONST:
+        actions_config_lvl2_const_handler(lastKeyPressed);
+        break;
+
+    case MODE_SETTINGS_LVL_2_MODO:
+        actions_config_lvl2_mode_handler(lastKeyPressed);
         break;
   }  
 }
 
 void actions_setup_pressed(byte lastKeyPressed) {
   mode = MODE_SETTINGS_LVL_1; 
-
-  // fuerza released
-  actions_released(lastKeyPressed);
 }
 
 void actions_setup() {

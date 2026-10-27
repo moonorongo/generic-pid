@@ -139,6 +139,15 @@ void refreshDisplay(byte st)
 
             case MODE_SETTINGS_LVL_1:
                 display_text(configLvl1[indexLvl1]);
+                break;
+
+            case MODE_SETTINGS_LVL_2_CONST:
+                display_text(configLvl2Const[indexLvl2Const]);
+                break;
+
+            case MODE_SETTINGS_LVL_2_MODO:
+                display_text(configLvl2Mode[indexLvl2Mode]);
+                break;
         }
 
         digitalWrite(latchPin, HIGH);

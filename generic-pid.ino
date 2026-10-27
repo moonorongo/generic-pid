@@ -1,8 +1,8 @@
 /*
     PENDIENTE: 
         - CONFIGURACION: definir un codigo generico que me permita navega un menu con 2 niveles
-            el primero con las opciones principales
-            el segundo con los valores de la configuracion  a editar
+            ** el primero con las opciones principales
+            ** el segundo con los valores de la configuracion  a editar
             el tercero tendria el numero a modificar - este no es un nivel, sino que surge del nivel 2 (el valor parpadeando que queremos editar)
 
             con esto ya tenemos la estructura de configuracion
@@ -24,13 +24,13 @@
 #define K_ENTER 2
 
 // modos de trabajo del controlador
-#define MODE_SHOW_TEMPERATURE 0     // muestra temperatura - modo por defecto
-#define MODE_SET_POINT 1            // establece Setpoint (usado en PID, CONTROL)
-#define MODE_CONTROL 2              // modo control (control de temperatura mas simple, similar a camara fermento)
-#define MODE_LOGGER 2               // modo data logger, para analizar funcionamiento heladeras
-#define MODE_SETTINGS_LVL_1 10      // LVL1: nivel 1 settings
-#define MODE_SETTINGS_LVL_2 20      // LVL2: nivel 2 valores
-#define MODE_SETTINGS_LVL_3 30      // LVL1: nivel 3 edicion
+#define MODE_SHOW_TEMPERATURE 0             // muestra temperatura - modo por defecto
+#define MODE_SET_POINT 1                    // establece Setpoint (usado en PID, CONTROL)
+#define MODE_CONTROL 2                      // modo control (control de temperatura mas simple, similar a camara fermento)
+#define MODE_LOGGER 2                       // modo data logger, para analizar funcionamiento heladeras
+#define MODE_SETTINGS_LVL_1 10              // LVL1: nivel 1 settings
+#define MODE_SETTINGS_LVL_2_CONST 20        // LVL2: nivel 2 valores
+#define MODE_SETTINGS_LVL_2_MODO 30         // LVL1: nivel 3 edicion
 
 
 // variables globales
@@ -46,7 +46,6 @@ void setup() {
     pid_setup();
     hid_setup();
     actions_setup();
-    actions_config_setup();
 }
 
 void loop() {
